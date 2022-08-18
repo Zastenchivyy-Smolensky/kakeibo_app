@@ -1,0 +1,22 @@
+{% extends "layout.html" %} {% block content %}
+<div class="container mt-4">
+  <h2>家計簿編集ページ</h2>
+  <form action="{{ url_for('update', id=kakeibo.id) }}" method="POST">
+    <label for="date">日付</label>
+        <input  name="date" value="{{kakeibo.date}}"></input>
+
+        <label for="is_money">収入</label>
+        <input type="checkbox" name="is_money" 
+        {% if kakeibo.is_money %}checked{% endif %}
+        >
+
+        <label for="title">費目</label>
+        <input name="title" value="{{kakeibo.title}}"></input>
+        
+        <label for="number">費用</label>
+        <input type="number" name="number" min="0" value="{{kakeibo.number}}">
+
+    <button type="submit" class="btn btn-primary">登録</button>
+  </form>
+</div>
+{% endblock %}
