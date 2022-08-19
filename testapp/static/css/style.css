@@ -1,4 +1,16 @@
+* {
+  list-style: none;
+}
 h1 {
   color: blue;
   border-bottom: double 6px #87cefa;
+}
+
+.example {
+  background-color: rgba(0, 255, 0, 0.5);
+  width: 120px;
+  height: auto;
+  position: relative;
+  display: block;
+  position: relative;
 }

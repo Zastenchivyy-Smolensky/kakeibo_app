@@ -30,8 +30,8 @@ def sample_form():
 
 @app.route("/list")
 def list():
-    Kakeibos=Kakeibo.query.all()
-    return render_template("testapp/list.html", Kakeibos=Kakeibos)
+    kakeibos=Kakeibo.query.all()
+    return render_template("testapp/list.html", kakeibos=kakeibos)
 
 @app.route("/add", methods=["GET","POST"])
 def add():
@@ -39,7 +39,7 @@ def add():
         return render_template("testapp/add.html")
     if request.method == "POST":
         form_date = request.form.get('date')
-        form_is_money = request.form.get('is_money', default=False, type=bool)
+        form_is_money = request.form.get('is_money', default=True, type=bool)
         form_title = request.form.get('title')
         form_number = request.form.get('number', default=0, type=int)
         kakeibo = Kakeibo(
