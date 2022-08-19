@@ -1,7 +1,6 @@
 from flask import render_template,request,redirect, url_for
 from testapp import app,db
 from testapp.models.kakeibo import Kakeibo
-
 @app.route("/")
 
 @app.route('/')
@@ -28,7 +27,12 @@ def sample_form():
         int_req2 = int(req2)
         ans = int_req1 + int_req2
         return f'{ans}'
-        
+
+@app.route("/list")
+def list():
+    Kakeibos=Kakeibo.query.all()
+    return render_template("testapp/list.html", Kakeibos=Kakeibos)
+
 @app.route("/add", methods=["GET","POST"])
 def add():
     if request.method == "GET":
@@ -38,28 +42,21 @@ def add():
         form_is_money = request.form.get('is_money', default=False, type=bool)
         form_title = request.form.get('title')
         form_number = request.form.get('number', default=0, type=int)
-
-        kakiebo=Kakeibo(
+        kakeibo = Kakeibo(
             date=form_date,
             is_money=form_is_money,
             title=form_title,
             number=form_number,
         )
-        db.session.add(kakiebo)
+        db.session.add(kakeibo)
         db.session.commit()
-        return redirect(url_for("index"))
-
-
-@app.route("/list")
-def list():
-    kakiebos=Kakeibo.query.all()
-    return render_template("testapp/list.html", kakiebos=kakiebos)
+        return redirect(url_for("list"))
 
 @app.route("/kakeibo/<int:id>")
 
 def detail(id):
-    kakiebo = Kakeibo.query.get(id)
-    return render_template("testapp/detail.html", kakiebo=kakiebo)
+    kakeibo = Kakeibo.query.get(id)
+    return render_template("testapp/detail.html", kakeibo=kakeibo)
 
 @app.route("/kakeibo/<int:id>/edit")
 def edit(id):
@@ -70,7 +67,7 @@ def edit(id):
 def update(id):
     kakeibo=Kakeibo.query.get(id)
     kakeibo.date=request.form.get("date")
-    kakeibo.is_money=request.form.get("is_money")
+    kakeibo.is_money=request.form.get("is_money", default=False, type=bool)
     kakeibo.title=request.form.get("title")
     kakeibo.number=request.form.get("number")
     db.session.merge(kakeibo)

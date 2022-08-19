@@ -7,7 +7,7 @@
     <div class="col-3">
       <a
         class="btn btn-outline-primary"
-        href="{{ url_for('edit', id=kakiebo.id) }}"
+        href="{{ url_for('edit', id=kakeibo.id) }}"
         role="button"
         >情報編集</a
       >
@@ -25,15 +25,15 @@
     </thead>
     <tbody>
       <tr>
-        <th scope="row">{{kakiebo.id}}</th>
-        <td>{{ kakiebo.date }}</td>
-        {% if kakiebo.is_money %}
+        <th scope="row">{{kakeibo.id}}</th>
+        <td>{{ kakeibo.date }}</td>
+        {% if kakeibo.is_money %}
         <td>収入</td>
         {% else %}
         <td>支出</td>
         {% endif %}
-        <td>{{ kakiebo.title }}</td>
-        <td>{{ kakiebo.number }}円</td>
+        <td>{{ kakeibo.title }}</td>
+        <td>{{ kakeibo.number }}円</td>
       </tr>
     </tbody>
   </table>
