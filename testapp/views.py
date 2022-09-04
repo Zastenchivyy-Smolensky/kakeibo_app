@@ -1,6 +1,11 @@
 from flask import render_template,request,redirect, url_for
 from testapp import app,db
 from testapp.models.kakeibo import Kakeibo
+import numpy as np
+from distutils.util import strtobool
+
+
+
 @app.route("/")
 
 @app.route('/')
@@ -32,16 +37,19 @@ def sample_form():
 def list():
     kakeibos=Kakeibo.query.all()
     return render_template("testapp/list.html", kakeibos=kakeibos)
-
+    
 @app.route("/add", methods=["GET","POST"])
 def add():
     if request.method == "GET":
         return render_template("testapp/add.html")
     if request.method == "POST":
         form_date = request.form.get('date')
-        form_is_money = request.form.get('is_money', default=True, type=bool)
+        form_is_money = request.form.get('is_money', default=False, type=bool)
+        print(form_is_money)
+        # form_is_money = convert_to_bool(request.args.get("is_money"),False)
+
         form_title = request.form.get('title')
-        form_number = request.form.get('number', default=0, type=int)
+        form_number = request.form.get('number', default=0, type=int) 
         kakeibo = Kakeibo(
             date=form_date,
             is_money=form_is_money,
@@ -67,7 +75,7 @@ def edit(id):
 def update(id):
     kakeibo=Kakeibo.query.get(id)
     kakeibo.date=request.form.get("date")
-    kakeibo.is_money=request.form.get("is_money", default=False, type=bool)
+    kakeibo.is_money=request.form.get("is_money",type=bool)
     kakeibo.title=request.form.get("title")
     kakeibo.number=request.form.get("number")
     db.session.merge(kakeibo)
