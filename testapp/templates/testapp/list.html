@@ -30,7 +30,6 @@
         {% endif %}
         <td>{{ kakeibo.title }}</td>
         <td>{{ kakeibo.number }}円</td>
-        {{kakeibo.sum}}円
         <td>
           <form action="{{ url_for('delete', id=kakeibo.id) }}" method="POST">
             <input class="btn btn-danger btn-sm" type="submit" value="削除" />
@@ -41,6 +40,7 @@
     </tbody>
   </table>
 </div>
+<script src="{{url_for('static', filename='javascript/modal.js')}}"></script>
 <script src="{{ url_for('static', filename='javascript/sample.js') }}"></script>
 
 {% endblock %}

@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- ↓追加 -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -19,6 +18,16 @@
     <link
       rel="stylesheet"
       href="{{url_for('static', filename='css/style.css')}}"
+    />
+    <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script>
+      $(function () {
+        $("#new-window").load("{{ url_for('add') }}");
+      });
+    </script>
+    <link
+      rel="stylesheet"
+      href="{{url_for('static', filename='css/modal.css')}}"
     />
     <title>テストWebアプリ</title>
   </head>
@@ -45,8 +54,12 @@
 
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
-            <a class="nav-link menu2" href="{{ url_for('add') }}">登録ページ</a>
-
+            <div class="nav-link menu2" id="modal-open">登録ページ</div>
+            <div id="modal-bg" class="active"></div>
+            <div id="modal-container" class="active">
+              <div id="new-window"></div>
+              <div id="modal-close">とじる</div>
+            </div>
             <a class="nav-link menu3" href="{{ url_for('sample_form') }}"
               >計算アプリ</a
             >
