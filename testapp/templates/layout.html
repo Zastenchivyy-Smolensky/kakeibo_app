@@ -55,8 +55,8 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
             <div class="nav-link menu2" id="modal-open">登録ページ</div>
-            <div id="modal-bg" class="active"></div>
-            <div id="modal-container" class="active">
+            <div id="modal-bg"></div>
+            <div id="modal-container">
               <div id="new-window"></div>
               <div id="modal-close">とじる</div>
             </div>
@@ -68,11 +68,6 @@
       </div>
     </nav>
 
-    <!-- <div class="example example1">
-      <ul class="menu1">
-        <li>家計簿アプリの説明</li>
-      </ul>
-    </div> -->
     {% block content %} {% endblock %}
 
     <script
@@ -80,6 +75,7 @@
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
       crossorigin="anonymous"
     ></script>
+    <script src="{{ url_for('static', filename='javascript/modal.js') }}"></script>
     <script src="{{ url_for('static', filename='javascript/sample.js') }}"></script>
   </body>
 </html>
