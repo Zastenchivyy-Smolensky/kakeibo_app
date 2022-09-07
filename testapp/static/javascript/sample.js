@@ -14,12 +14,4 @@ $(function () {
   //     $(this).text("マウスが外れてたよ");
   //   }
   // );
-  $(".example").hide();
-  $(".menu1")
-    .mouseover(function () {
-      $(".example1").show();
-    })
-    .mouseout(function () {
-      $(".example1").hide();
-    });
 });

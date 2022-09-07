@@ -1,12 +1,10 @@
-from flask import render_template,request,redirect, url_for
+from flask import *
 from testapp import app,db
-from flask_login import LoginManager,login_user,logout_user,login_required
-
 from testapp.models.kakeibo import Kakeibo
-import numpy
-
-
-
+import numpy as np
+import json
+from datetime import datetime
+from sqlalchemy.sql import func
 @app.route('/')
 def index():
     my_dict = {
@@ -30,22 +28,41 @@ def sample_form():
         int_req1 = int(req1)
         int_req2 = int(req2)
         ans = int_req1 + int_req2
-        return f'{ans}'
+        return_json={
+            "ans": request.form["ans"]
+        }
+        return jsonify(values=json.dumps(return_json))
 
-sum=0
 @app.route("/list")
 def list():
     kakeibos=Kakeibo.query.all()
-    return render_template("testapp/list.html", kakeibos=kakeibos)
-    
+    summary = db.session.query(func.sum(Kakeibo.number)).first()[0]
+    insum=0
+    outsum=0
+    for data in kakeibos:
+        if data.is_money:
+            insum += data.number
+        else:
+            outsum += data.number
+    print(insum)
+    print(outsum)
+    print(summary)
+    data = {
+        "kakeibos": kakeibos,
+        "insum": insum,
+        "summary": summary,
+        "outsum": outsum
+    }
+    return render_template("testapp/list.html", data=data)
+
 @app.route("/add", methods=["GET","POST"])
 def add():
     if request.method == "GET":
         return render_template("testapp/add.html")
     if request.method == "POST":
         form_date = request.form.get('date')
+        print(form_date)
         form_is_money = request.form.get('is_money', default=False, type=bool)
-        print(form_is_money)
         # form_is_money = convert_to_bool(request.args.get("is_money"),False)
         form_title = request.form.get('title')
         if form_is_money:
@@ -59,13 +76,13 @@ def add():
             is_money=form_is_money,
             title=form_title,
             number=form_number,
-        )
+        )        
         db.session.add(kakeibo)
         db.session.commit()
         return redirect(url_for("list"))
+        
 
 @app.route("/kakeibo/<int:id>")
-
 def detail(id):
     kakeibo = Kakeibo.query.get(id)
     return render_template("testapp/detail.html", kakeibo=kakeibo)
@@ -79,17 +96,9 @@ def edit(id):
 def update(id):
     kakeibo=Kakeibo.query.get(id)
     kakeibo.date=request.form.get("date")
-    kakeibo.is_money=request.form.get("is_money",default=False,type=bool)
+    kakeibo.is_money=request.form.get("is_money",type=bool)
     kakeibo.title=request.form.get("title")
     kakeibo.number=request.form.get("number")
-    number=kakeibo.number
-    if kakeibo.is_money:
-        if int(number)<0:
-            number*=-1
-    else:
-       number*=-1
-
-        
     db.session.merge(kakeibo)
     db.session.commit()
     return redirect(url_for("list"))

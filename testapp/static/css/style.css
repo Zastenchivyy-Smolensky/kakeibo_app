@@ -14,3 +14,7 @@ h1 {
   display: block;
   position: relative;
 }
+
+.nav-link {
+  cursor: pointer;
+}

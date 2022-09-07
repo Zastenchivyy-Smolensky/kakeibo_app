@@ -12,7 +12,7 @@
       </tr>
     </thead>
     <tbody>
-      {% for kakeibo in kakeibos %}
+      {% for kakeibo in data.kakeibos %}
       <tr>
         <th scope="row">{{kakeibo.id}}</th>
         <td>
@@ -39,6 +39,7 @@
       {% endfor %}
     </tbody>
   </table>
+  合計{{data.summary}}円
 </div>
 <script src="{{ url_for('static', filename='javascript/sample.js') }}"></script>
 

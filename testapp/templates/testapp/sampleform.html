@@ -4,7 +4,7 @@
 
 <h1>サンプルフォームです。</h1>
 
-<form action="/sampleform" method="POST">
+<form onsubmit="return false" name="example_form">
   <input name="data1" type="number"></input>
   <select name="calc" id="sample">
     <option name="sample1" value="sample1" id="sample1">+</option>
@@ -13,7 +13,7 @@
     <option name="sample4" value="sample4" id="sample4">/</option>
   </select>
     <input name="data2" type="number"></input>
-  <button type="submit">送信</button>
+  <button type="submit" id="submit">送信</button>
   <script src="{{ url_for('static', filename='javascript/sample.js') }}"></script>
 </form>
 
